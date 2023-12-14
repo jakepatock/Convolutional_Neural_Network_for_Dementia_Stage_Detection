@@ -138,7 +138,7 @@ loss_func = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters())
 
 #init early stopper 
-early_stopper = Early_Stopping_F1(20)
+early_stopper = Early_Stopping_F1(50)
 
 #list to track accuracy and loss 
 training_loss_lst = []
@@ -148,8 +148,8 @@ test_acc_lst = []
 f1_score_lst = []
 
 #training loop
-epochs = 500
-for epoch in range(epochs):
+epoch = 0
+while True:
     #set model into training mode 
     model.train()
     #setting running loss, correct, and total varibles for this epoch 
@@ -183,7 +183,8 @@ for epoch in range(epochs):
     train_loss = running_loss / len(train_loader.dataset)
     training_accuracy = correct / total
 
-    print(f"Epoch {epoch + 1}:")
+    epoch += 1
+    print(f"Epoch {epoch}:")
     print(f'Training: Loss = {train_loss}, Accuracy = {training_accuracy}')
 
     model.eval()
