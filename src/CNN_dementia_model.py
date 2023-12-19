@@ -69,7 +69,7 @@ training_data, validation_data = torch.utils.data.random_split(dataset, [train_s
 
 #batch size of the data used due to the fact that loading all the trianing data into ram at one point will not be possible
 #therefore we split it up into batches of training data 
-batch_size = 64
+batch_size = 16
 
 #feeding the datasets to the loader 
 train_loader = torch.utils.data.DataLoader(training_data, batch_size, shuffle=True, pin_memory=True)
@@ -83,8 +83,10 @@ class Early_Stopping_F1():
         self.current_patience = 0
         self.max_f1 = float('-inf')
         self.min_state_dict = None
+        self.epoch = 0
 
     def stopper(self, current_model, f1):
+        self.epoch += 1
         if f1 > self.max_f1:
             self.max_f1 = f1
             self.current_patience = 0
@@ -102,6 +104,12 @@ class Early_Stopping_F1():
     
     def get_current_pacients(self):
         return self.current_patience
+    
+    def get_max_f1(self):
+        return self.max_f1
+    
+    def get_kept_epoch(self):
+        return self.epoch - self._patience
 
 #setting up the model 
 class CNN(nn.Module):
@@ -111,6 +119,7 @@ class CNN(nn.Module):
         self._forward = nn.Sequential(
         #conv layer 1 
         nn.Conv2d(in_channels=1, out_channels=64, kernel_size=3, padding=1, stride=1),
+        nn.BatchNorm2d(64),
         nn.ReLU(),
 
         #pool 1 
@@ -118,6 +127,7 @@ class CNN(nn.Module):
 
         #conv layer 2
         nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, padding=1, stride=1),
+        nn.BatchNorm2d(128),
         nn.ReLU(),
 
         #pool 2 
@@ -125,6 +135,7 @@ class CNN(nn.Module):
 
         #conv layer 3
         nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3, padding=1, stride=1),
+        nn.BatchNorm2d(256),
         nn.ReLU(),
 
         #pool 3
@@ -132,6 +143,7 @@ class CNN(nn.Module):
 
         #conv layer 4 
         nn.Conv2d(in_channels=256, out_channels=512, kernel_size=3, padding=1, stride=1),
+        nn.BatchNorm2d(512),
         nn.ReLU(),
 
         #pool 4 
@@ -139,6 +151,7 @@ class CNN(nn.Module):
 
         #conv layer 5
         nn.Conv2d(in_channels=512, out_channels=512, kernel_size=3, padding=1, stride=1),
+        nn.BatchNorm2d(512),
         nn.ReLU(),
 
         #pool 5
@@ -149,11 +162,13 @@ class CNN(nn.Module):
 
         #fc layer 1 
         nn.Linear(8192, 1024),
+        nn.BatchNorm1d(1024),
         nn.ReLU(),
         nn.Dropout(p=0.5),
 
         #fc layer 2
         nn.Linear(1024, 256),
+        nn.BatchNorm1d(256),
         nn.ReLU(),
         nn.Dropout(p=0.5),
 
@@ -289,6 +304,10 @@ while True:
     if early_stopper.stopper(model, f1):
         state_dict = early_stopper.get_state_dict()
         model.load_state_dict(state_dict)
+        max_f1 = early_stopper.get_max_f1()
+        kept_epoch = early_stopper.get_kept_epoch()
+        print()
+        print(f'Kept Epoch: {kept_epoch}, Max F1: {max_f1}')
         break
     else:
         print(f'Current Patience: {early_stopper.get_current_pacients()}')

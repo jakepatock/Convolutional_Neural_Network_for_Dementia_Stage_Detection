@@ -44,7 +44,7 @@ ax1.plot(x, test_accruacy, label="Test Accuracy")
 ax1.scatter(saved_epoch_idx + 1, test_accruacy[saved_epoch_idx], color='red', marker='.', zorder=2)
 ax1.set_xlabel('Epoch')
 ax1.set_ylabel('Accuracy')
-
+ax1.set_ylim(0, 1.1)
 ax1.legend()
 
 ax2.plot(x, train_loss, label='Train Loss')
@@ -53,6 +53,7 @@ ax2.plot(x, test_loss, label='Test Loss')
 ax2.scatter(saved_epoch_idx + 1, test_loss[saved_epoch_idx], color='red', marker='.', zorder=2)
 ax2.set_xlabel('Epoch')
 ax2.set_ylabel("Loss")
+ax2.set_ylim(0, 1)
 ax2.legend()
 
 ax1.set_title('Accuracy')
@@ -63,8 +64,9 @@ ax3.scatter(saved_epoch_idx + 1, f1_score[saved_epoch_idx], color='red', marker=
 ax3.set_ylabel('F1 Score')
 ax3.set_xlabel("Epoch")
 ax3.set_title('F1 Score')
+ax3.set_ylim(0, 1.1)
 
-fig.suptitle('Convolutional Neural Network for Dementia Stage Detection Evalulation')
+fig.suptitle('Batch size = 16, Batch norm')
 
 plt.subplots_adjust(wspace=0.2)
 fig.savefig(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\CNN_Eval_Plot')
