@@ -1,35 +1,60 @@
 import torch
 import torch.nn as nn
-import numpy as np
-import matplotlib.pyplot as plt
-import csv
-import torchmetrics.functional as tm
 import sklearn.metrics as skm
 import torchvision as tv 
 import torch.utils.data 
-import math
 import torchvision.transforms as transforms
-from PIL import Image
-import torcheval.metrics.functional as tmf
+import numpy as np
+import random
 
-#set torch seed 
-torch.manual_seed(42)
+#setting variables to make repoducabiliy 
+#these variables are used to accelerate gpu learning, especialy when the input size varies into the network
+#false will result in loss of performance but deterministic results, need both of these varibles to be set (benchmark = False, deterministic = True) to be deterministic
+torch.backends.cudnn.benchmark = False
+torch.backends.cudnn.deterministic = True
+#this varible configures the pytorch's use of deterministic algorithms instead of non-deterministic ones 
+#(however throws error is there is no alternative to a deterministic algorithm) in this case it thrwos an error 
+#torch.use_deterministic_algorithms(True)
+#set seeds of libs
+random_seed = 42
+torch.manual_seed(random_seed)
+np.random.seed(random_seed)
+random.seed(random_seed)
 
 #getting device 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 #data path
-data = r'C:\Visual Studio Coding\pytorch\cnn\CNN_for_dementia_stage_detection\Dataset'
+data = r'C:\Users\1234z\Desktop\Jakes Stuff\Dataset'
 
 #fuction that takes list of different transfomration to apply to the list of images 
 tensor_gray_transformation = tv.transforms.Compose([tv.transforms.ToTensor(), transforms.Grayscale(num_output_channels=1)])
 
 #feed directory of data with each different class in a different directroy in the parent directory 
 #this will be used to calculate the mean and std used for normalization of the data 
-dataset = tv.datasets.ImageFolder(data, transform=tensor_gray_transformation)
+norm_dataset = tv.datasets.ImageFolder(data, transform=tensor_gray_transformation)
+
+def grayscaleimage_dataset_normalization(dataset_tensor):
+    channel_sum = torch.zeros(1)
+    elements = torch.numel(dataset_tensor[0][0])
+    for image, label in dataset_tensor:
+        channel_sum += torch.sum(image, dim=(1,2))
+    mean = channel_sum / (len(dataset_tensor) * elements)
+
+    std_sum = torch.zeros(1)
+    for image, label in dataset_tensor:
+        std_sum += torch.sum((image - mean)**2, dim=(1, 2))
+    std = torch.sqrt(torch.div(std_sum, (len(dataset_tensor) * elements) - 1))
+    
+    return mean, std
+
+mean, std = grayscaleimage_dataset_normalization(norm_dataset)
+
+tensor_gray_norm_transformations = tv.transforms.Compose([tv.transforms.ToTensor(), transforms.Grayscale(num_output_channels=1), tv.transforms.Normalize(mean, std)])
+dataset = tv.datasets.ImageFolder(data, transform=tensor_gray_norm_transformations)
 
 #division this data to validation and trianing 
-# 90% for training
+# 80% for training
 train_size = int(0.8 * len(dataset))  
 val_size = len(dataset) - train_size  # Remaining for validation
 
@@ -41,8 +66,8 @@ training_data, validation_data = torch.utils.data.random_split(dataset, [train_s
 batch_size = 64
 
 #feeding the datasets to the loader 
-train_loader = torch.utils.data.DataLoader(training_data, batch_size, shuffle=True, pin_memory=True, num_workers=0)
-test_loader = torch.utils.data.DataLoader(validation_data, batch_size, pin_memory=True, num_workers=0)
+train_loader = torch.utils.data.DataLoader(training_data, batch_size, shuffle=True, pin_memory=True)
+test_loader = torch.utils.data.DataLoader(validation_data, batch_size, pin_memory=True)
 
 class Early_Stopping_F1():
     def __init__(self, patience):
@@ -243,15 +268,15 @@ while True:
         model.load_state_dict(state_dict)
         break
 
-torch.save(model, r'C:\Visual Studio Coding\pytorch\cnn\CNN_for_dementia_stage_detection\Data\model.pth')
+# torch.save(model, r'C:\Users\1234z\Desktop\Jakes Stuff\Data\model.pth')
 
-with open(r'C:\Visual Studio Coding\pytorch\cnn\CNN_for_dementia_stage_detection\Data\training_loss.txt', 'w+') as file:
-    file.write(str(training_loss_lst))
-with open(r'C:\Visual Studio Coding\pytorch\cnn\CNN_for_dementia_stage_detection\Data\training_accuracy.txt', 'w+') as file:
-    file.write(str(training_accuracy_lst))
-with open(r'C:\Visual Studio Coding\pytorch\cnn\CNN_for_dementia_stage_detection\Data\test_loss.txt', 'w+') as file:
-    file.write(str(test_loss_lst))
-with open(r'C:\Visual Studio Coding\pytorch\cnn\CNN_for_dementia_stage_detection\Data\test_accuracy.txt', 'w+') as file:
-    file.write(str(test_acc_lst))
-with open(r'C:\Visual Studio Coding\pytorch\cnn\CNN_for_dementia_stage_detection\Data\f1_score.txt', 'w+') as file:
-    file.write(str(f1_score_lst))
+# with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\training_loss.txt', 'w+') as file:
+#     file.write(str(training_loss_lst))
+# with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\training_accuracy.txt', 'w+') as file:
+#     file.write(str(training_accuracy_lst))
+# with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\test_loss.txt', 'w+') as file:
+#     file.write(str(test_loss_lst))
+# with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\test_accuracy.txt', 'w+') as file:
+#     file.write(str(test_acc_lst))
+# with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\f1_score.txt', 'w+') as file:
+#     file.write(str(f1_score_lst))
