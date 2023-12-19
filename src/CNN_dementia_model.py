@@ -99,6 +99,9 @@ class Early_Stopping_F1():
         
     def get_state_dict(self):
         return self.min_state_dict  
+    
+    def get_current_pacients(self):
+        return self.current_patience
 
 #setting up the model 
 class CNN(nn.Module):
@@ -272,7 +275,7 @@ while True:
     
     #printing status to consel
     print(f"Test: Loss = {test_loss}, Accuracy = {test_accuracy}, F-1 Score = {f1}")
-    print()
+    
 
     #adding loss, accuracy, and f1 score to the lists that will be used to produce a plot of the progress of the model 
     training_loss_lst.append(train_loss)
@@ -287,6 +290,9 @@ while True:
         state_dict = early_stopper.get_state_dict()
         model.load_state_dict(state_dict)
         break
+    else:
+        print(f'Current Patience: {early_stopper.get_current_pacients()}')
+        print()
 
 torch.save(model, r'C:\Users\1234z\Desktop\Jakes Stuff\Data\model.pth')
 
