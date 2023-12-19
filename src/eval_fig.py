@@ -55,7 +55,7 @@ ax3.set_ylabel('F1 Score')
 ax3.set_xlabel("Epoch")
 ax3.set_title('F1 Score')
 
-fig.suptitle('Convolutional Neural Network for Dementia Stage Detection Evalulation (500 Epochs) (Batch 64)')
+fig.suptitle('Convolutional Neural Network for Dementia Stage Detection Evalulation')
 
 plt.subplots_adjust(wspace=0.2)
 fig.savefig(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\CNN_Eval_Plot')

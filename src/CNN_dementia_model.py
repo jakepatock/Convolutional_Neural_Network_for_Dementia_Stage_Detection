@@ -21,13 +21,13 @@ torch.manual_seed(random_seed)
 np.random.seed(random_seed)
 random.seed(random_seed)
 
-#getting device 
+#getting device, setting to gpu if available
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-#data path
+#data path to directory with sub directories that contain images of subdirectory class
 data = r'C:\Users\1234z\Desktop\Jakes Stuff\Dataset'
 
-#fuction that takes list of different transfomration to apply to the list of images 
+#fuction that takes list of different transfomration to apply to the list of images, converting to tensor and grayscale
 tensor_gray_transformation = tv.transforms.Compose([tv.transforms.ToTensor(), transforms.Grayscale(num_output_channels=1)])
 
 #feed directory of data with each different class in a different directroy in the parent directory 
@@ -35,6 +35,10 @@ tensor_gray_transformation = tv.transforms.Compose([tv.transforms.ToTensor(), tr
 norm_dataset = tv.datasets.ImageFolder(data, transform=tensor_gray_transformation)
 
 def grayscaleimage_dataset_normalization(dataset_tensor):
+    '''
+    Takes a pytorch dataset calculates the mean and std 
+    of each channel for the sample as a whole
+    '''
     channel_sum = torch.zeros(1)
     elements = torch.numel(dataset_tensor[0][0])
     for image, label in dataset_tensor:
@@ -48,8 +52,10 @@ def grayscaleimage_dataset_normalization(dataset_tensor):
     
     return mean, std
 
+#getting the mean and std to normalize the dataset 
 mean, std = grayscaleimage_dataset_normalization(norm_dataset)
 
+#composing final preprocessing transfomrations and making the proprocessed dataset
 tensor_gray_norm_transformations = tv.transforms.Compose([tv.transforms.ToTensor(), transforms.Grayscale(num_output_channels=1), tv.transforms.Normalize(mean, std)])
 dataset = tv.datasets.ImageFolder(data, transform=tensor_gray_norm_transformations)
 
@@ -69,6 +75,8 @@ batch_size = 64
 train_loader = torch.utils.data.DataLoader(training_data, batch_size, shuffle=True, pin_memory=True)
 test_loader = torch.utils.data.DataLoader(validation_data, batch_size, pin_memory=True)
 
+#init the early stopping class that will be used to stop training after a specified number of epcohs
+#without inprovment to the f1 score
 class Early_Stopping_F1():
     def __init__(self, patience):
         self._patience = patience
@@ -92,6 +100,7 @@ class Early_Stopping_F1():
     def get_state_dict(self):
         return self.min_state_dict  
 
+#setting up the model 
 class CNN(nn.Module):
     def __init__(self, num_classes):
         super(CNN, self).__init__()
@@ -153,7 +162,7 @@ class CNN(nn.Module):
         return self._forward(x)
 
 #init model 
-model = CNN(4)
+model = CNN(len(dataset.classes))
 model.to(device)
 
 #loss function
@@ -205,17 +214,24 @@ while True:
         predicted_arg = torch.argmax(predicted_labels, dim=1)
         correct += (predicted_arg == labels).sum().item()
 
+    #calculating the loss for this epoch
     train_loss = running_loss / len(train_loader.dataset)
+    #getting the accuracy for this epoch 
     training_accuracy = correct / total
 
+    #printing status of loss and accuracy to consle
     epoch += 1
     print(f"Epoch {epoch}:")
     print(f'Training: Loss = {train_loss}, Accuracy = {training_accuracy}')
 
+    #evaluating the model 
     model.eval()
+    #init all varibles to track accuracy and loss 
     test_loss_cul = 0
     correct = 0
     total = 0 
+
+    #these will be used to calculate the f1 score for this current epoch on the training data
     cul_predictions = torch.tensor([]).to(device)
     cul_labels = torch.tensor([]).to(device)
 
@@ -254,29 +270,33 @@ while True:
         #beta > 1 shifts the f1 score to be more in favor or recall while beta < 1 makes it favored towards precision 
         f1 = skm.fbeta_score(cul_predictions.cpu().numpy(), cul_labels.cpu().numpy(), average="weighted", beta=2)
     
+    #printing status to consel
     print(f"Test: Loss = {test_loss}, Accuracy = {test_accuracy}, F-1 Score = {f1}")
     print()
 
+    #adding loss, accuracy, and f1 score to the lists that will be used to produce a plot of the progress of the model 
     training_loss_lst.append(train_loss)
     training_accuracy_lst.append(training_accuracy)
     test_loss_lst.append(test_loss)
     test_acc_lst.append(test_accuracy)
     f1_score_lst.append(float(f1))
 
+    #earlier stopper condition check to see if the pacients of the model has run out 
+    #if it has revert model to highest f1 
     if early_stopper.stopper(model, f1):
         state_dict = early_stopper.get_state_dict()
         model.load_state_dict(state_dict)
         break
 
-# torch.save(model, r'C:\Users\1234z\Desktop\Jakes Stuff\Data\model.pth')
+torch.save(model, r'C:\Users\1234z\Desktop\Jakes Stuff\Data\model.pth')
 
-# with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\training_loss.txt', 'w+') as file:
-#     file.write(str(training_loss_lst))
-# with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\training_accuracy.txt', 'w+') as file:
-#     file.write(str(training_accuracy_lst))
-# with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\test_loss.txt', 'w+') as file:
-#     file.write(str(test_loss_lst))
-# with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\test_accuracy.txt', 'w+') as file:
-#     file.write(str(test_acc_lst))
-# with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\f1_score.txt', 'w+') as file:
-#     file.write(str(f1_score_lst))
+with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\training_loss.txt', 'w+') as file:
+    file.write(str(training_loss_lst))
+with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\training_accuracy.txt', 'w+') as file:
+    file.write(str(training_accuracy_lst))
+with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\test_loss.txt', 'w+') as file:
+    file.write(str(test_loss_lst))
+with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\test_accuracy.txt', 'w+') as file:
+    file.write(str(test_acc_lst))
+with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\f1_score.txt', 'w+') as file:
+    file.write(str(f1_score_lst))

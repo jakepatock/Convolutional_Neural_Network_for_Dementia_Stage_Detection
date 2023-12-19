@@ -3,14 +3,29 @@ import torchvision as tv
 
 def rgbimage_dataset_normalization(dataset_tensor):
     channel_sum = torch.zeros(3)
+    elements = torch.numel(dataset_tensor[0][0])
     for image, label in dataset_tensor:
         channel_sum += torch.sum(image, dim=(1,2))
-    mean = channel_sum / len(dataset_tensor)
+    mean = channel_sum / (len(dataset_tensor) * elements)
 
     std_sum = torch.zeros(3)
     for image, label in dataset_tensor:
-        std_sum += (torch.sum(image, dim=(1,2)) - mean)**2
-    std = torch.sqrt(torch.div(std_sum, len(dataset_tensor)))
+        std_sum += torch.sum((image - mean)**2, dim=(1, 2))
+    std = torch.sqrt(torch.div(std_sum, (len(dataset_tensor) * elements) - 1))
+    
+    return mean, std
+
+def grayscaleimage_dataset_normalization(dataset_tensor):
+    channel_sum = torch.zeros(1)
+    elements = torch.numel(dataset_tensor[0][0])
+    for image, label in dataset_tensor:
+        channel_sum += torch.sum(image, dim=(1,2))
+    mean = channel_sum / (len(dataset_tensor) * elements)
+
+    std_sum = torch.zeros(1)
+    for image, label in dataset_tensor:
+        std_sum += torch.sum((image - mean)**2, dim=(1, 2))
+    std = torch.sqrt(torch.div(std_sum, (len(dataset_tensor) * elements) - 1))
     
     return mean, std
 
