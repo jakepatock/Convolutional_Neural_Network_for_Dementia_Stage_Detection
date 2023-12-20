@@ -23,8 +23,7 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[linkedin-url]: https://www.linkedin.com/in/jake-patock-923089250/
-[![LinkedIn][linkedin-shield]][linkedin-url]: https://www.linkedin.com/in/jake-patock-923089250/
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
 
 
