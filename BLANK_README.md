@@ -225,7 +225,7 @@ Project Link: [https://github.com/jakepatock/Convolutional_Neural_Network_for_De
 [issues-shield]: https://img.shields.io/github/issues/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection.svg?style=for-the-badge
 [issues-url]: https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/issues
 [license-shield]: https://img.shields.io/github/license/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection.svg?style=for-the-badge
-[license-url]: https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/LICENSE.txt
+[license-url]: https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/jake-patock-923089250/
 [product-screenshot]: images/screenshot.png
