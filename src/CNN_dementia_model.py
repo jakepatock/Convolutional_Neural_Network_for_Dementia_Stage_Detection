@@ -66,6 +66,9 @@ mean, std = image_dataset_normalization(norm_dataset)
 #composing final preprocessing transfomrations and making the proprocessed dataset
 tensor_gray_norm_transformations = tv.transforms.Compose([tv.transforms.ToTensor(), transforms.Grayscale(num_output_channels=1), tv.transforms.Normalize(mean, std)])
 dataset = tv.datasets.ImageFolder(data, transform=tensor_gray_norm_transformations)
+#writting classes to file to use later 
+with open(r'C:\Users\1234z\Desktop\Jakes Stuff\model_results\classes.txt', 'w+') as file:
+    file.write(str(dataset.classes))
 
 #division this data to validation and trianing 
 # 80% for training
@@ -320,15 +323,15 @@ while True:
         print(f'Current Patience: {early_stopper.get_current_pacients()}')
         print()
 
-torch.save(model, r'C:\Users\1234z\Desktop\Jakes Stuff\Data\model.pth')
+torch.save(model.state_dict(), r'C:\Users\1234z\Desktop\Jakes Stuff\model_results\model.pth')
 
-with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\training_loss.txt', 'w+') as file:
+with open(r'C:\Users\1234z\Desktop\Jakes Stuff\model_results\training_loss.txt', 'w+') as file:
     file.write(str(training_loss_lst))
-with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\training_accuracy.txt', 'w+') as file:
+with open(r'C:\Users\1234z\Desktop\Jakes Stuff\model_results\training_accuracy.txt', 'w+') as file:
     file.write(str(training_accuracy_lst))
-with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\test_loss.txt', 'w+') as file:
+with open(r'C:\Users\1234z\Desktop\Jakes Stuff\model_results\test_loss.txt', 'w+') as file:
     file.write(str(test_loss_lst))
-with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\test_accuracy.txt', 'w+') as file:
+with open(r'C:\Users\1234z\Desktop\Jakes Stuff\model_results\test_accuracy.txt', 'w+') as file:
     file.write(str(test_acc_lst))
-with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\f1_score.txt', 'w+') as file:
+with open(r'C:\Users\1234z\Desktop\Jakes Stuff\model_results\f1_score.txt', 'w+') as file:
     file.write(str(f1_score_lst))

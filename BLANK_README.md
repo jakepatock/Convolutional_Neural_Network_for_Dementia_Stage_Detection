@@ -18,12 +18,12 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![Contributors][contributors-shield]]https://github.com/jakepatock
+[![Contributors][contributors-shield]][contributors-url]:https://github.com/jakepatock
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/LICENSE]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+[![MIT License][license-shield]][license-url]:https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/LICENSE
+[![LinkedIn][linkedin-shield]][linkedin-url]:https://www.linkedin.com/in/jake-patock-923089250/
 
 
 
@@ -34,7 +34,7 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">Convolutional_Neural_Network_for_Dementia_Stage_Detection</h3>
+<h3 align="center">Convolutional Neural Network for Dementia Stage Detection</h3>
 
   <p align="center">
     project_description
