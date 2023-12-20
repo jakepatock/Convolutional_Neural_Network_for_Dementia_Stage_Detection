@@ -195,7 +195,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - jake.r.patock@gmail.com
+Jake Patock - [@jakepatock](https://twitter.com/jakepatock) - jake.r.patock@gmail.com
 
 Project Link: [https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection](https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection)
 
