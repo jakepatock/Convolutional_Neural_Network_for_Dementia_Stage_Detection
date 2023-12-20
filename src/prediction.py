@@ -102,7 +102,8 @@ class CNN(nn.Module):
 
     def forward(self, x):
         return self._forward(x)
-    
+
+#load image that will be classified 
 image = Image.open(r'C:\Users\1234z\Desktop\Jakes Stuff\dataset\Mild_Demented\mild_1.jpg')
 
 #transforming to tensor, getting mean and std to use to normalize the image 
@@ -113,7 +114,7 @@ std = torch.std(norm_tensor)
 
 #def the preprocessing transfomration for the next step 
 transform = tv.transforms.Compose([tv.transforms.ToTensor(), transforms.Grayscale(num_output_channels=1), transforms.Normalize(mean, std), transforms.Resize((128, 128))]) 
-#preprocessing image                          
+#preprocessing image adding 4th demention for the input to the CNN layers                     
 tensor = transform(image).unsqueeze(0)
 
 #load classes from file 
@@ -125,6 +126,7 @@ with open(r'C:\Users\1234z\Desktop\Jakes Stuff\model_results\classes.txt', 'r') 
 model = CNN(4)
 #getting the state dict and applying to the model
 model.load_state_dict(torch.load(r'C:\Users\1234z\Desktop\Jakes Stuff\model_results\model.pth'))
+
 #setting to eval 
 model.eval()
 with torch.no_grad():
@@ -133,5 +135,3 @@ probabilities = torch.nn.functional.softmax(output[0], dim=0)
 predicted_class = torch.argmax(probabilities).item()
 
 print(classes[predicted_class])
-
-
