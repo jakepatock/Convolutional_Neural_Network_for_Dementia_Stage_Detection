@@ -69,6 +69,6 @@ ax3.set_ylim(0, 1.1)
 fig.suptitle('Batch size = 16, Batch norm')
 
 plt.subplots_adjust(wspace=0.2)
-fig.savefig(r'model_results\plots\CNN_Eval_Plot')
+fig.savefig(r'model_results\plots\CNN_Eval_Plot_batch16.png')
 plt.show()
 

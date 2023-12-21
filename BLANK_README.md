@@ -147,20 +147,19 @@ The rest of the packages can be installed using pip with the following commands:
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
+1. Initialize a local repo on your machine
+  ```sh
+  git init
+  ```
 2. Clone the repo
    ```sh
    git clone https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection.git
    ```
-3. Install NPM packages
+3. Naviagte into the cloned repo directroy
    ```sh
-   npm install
+   cd Convolutional_Neural_Network_for_Dementia_Stage_Detection/
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-
+   
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
