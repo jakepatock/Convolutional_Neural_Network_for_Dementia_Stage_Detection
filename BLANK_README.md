@@ -102,6 +102,7 @@ This project requires the installation of a python 3.8-3.10 and few libraries to
 ### Prerequisites
 
 Pytorch supports python verions of 3.8-3.10. This project uses python 3.10.10. The project used the gpu cuda version of pytorch. Alternatively, you can can use the slower cpu version of pytorch if hardware is not available (cuda is not avaliable on MacOS). Commands for all operating systems can be found on the link below.
+
 [![Static Badge](https://img.shields.io/badge/Torch-Install-red?logo=pytorch)](https://pytorch.org/get-started/locally/)
 
 Examples:
@@ -110,13 +111,13 @@ Examples:
   pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
   ```
 * Pytorch cuda for Linux
-  '''sh
+  ```sh
   pip3 install torch torchvision torchaudio
-  '''
+  ```
 * Pytorch cpu version for Windows
-  '''sh
+  ```sh
   pip3 install torch torchvision torchaudio
-  '''
+  ```
 
 ### Installation
 
