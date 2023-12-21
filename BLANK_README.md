@@ -58,7 +58,7 @@
 
 <h3 align="center">Convolutional_Neural_Network_for_Dementia_Stage_Detection</h3>
 
-  <p align="center">
+  <p align="left">
     This project involves a CNN model used for predicting the stage of dementia in patients based on transverse MRI brain images. The dataset used by this model was sourced from Kaggle (link: https://www.kaggle.com/datasets/sachinkumar413/alzheimer-mri-dataset). This dataset comprises 6,400 128x128-pixel images of transverse brain MRI scans from patients at varying dementia stages. The dataset consists of four classes: Class 1 (mildly demented) includes 896 images; Class 2 (moderately demented) has 64 images; Class 3 (non-demented) comprises 3,200 images; and Class 4 (very mildly demented) contains 2,240 images. Notably, the dataset is imbalanced across its class representation.
 
 The dataset was divided into 80% for training and 20% for validation, and the images were converted into a single grayscale channel tensor. A batch size of 64 images per batch was utilized in the data loader. The CNN structure consisted of 5 convolutional layers with a max-pooling layer interspersed among them. The channel sizes progressed in the order of 1, 64, 128, 256, 512, and 512. The final pooling layer was flattened and connected to three fully connected linear layers. After the first two linear layers, dropout of 0.5 was introduced to prevent overfitting. The sizes of these linear layers were as follows: 8192 neurons, 1024 neurons, 256 neurons, and finally 4 neurons.
@@ -77,7 +77,6 @@ Training incorporated an early stopper (with a pacients of 50 epochs) based on m
 </div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 ### Built With
