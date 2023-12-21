@@ -18,6 +18,10 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
+<div style="display: flex; justify-content: center; gap: 20px;">
+  <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Moderate_Demented/moderate_1.jpg" alt="Moderate Demented" style="flex: 25%; padding: 10px; margin-left: auto; margin-right: auto;">
+</div>
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
