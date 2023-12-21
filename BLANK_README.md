@@ -105,7 +105,7 @@ Training incorporated an early stopper (with a pacients of 50 epochs) based on m
 
 ### Built With
 
-* [![Python][python]][python-url]
+* [![Static Badge](https://img.shields.io/badge/Python-3.10.10-yellow?logo=python)][python-url]
 * [![Pytorch](https://img.shields.io/badge/Pytorch-2.1.2%2Bcu121-red?logo=pytorch)](https://pytorch.org/)
 * [![Static Badge](https://img.shields.io/badge/Matplotlib-3.8.2-black)](https://matplotlib.org/)
 * [![Static Badge](https://img.shields.io/badge/Scitkit%20Learn-1.3.2-orange?logo=scikit-learn)](https://scikit-learn.org/stable/)
