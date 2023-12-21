@@ -25,15 +25,6 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-
-
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <a href="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
 <h3 align="center">Convolutional_Neural_Network_for_Dementia_Stage_Detection</h3>
 
   <p align="center">
@@ -89,15 +80,7 @@ Training incorporated an early stopper (with a pacients of 50 epochs) based on m
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `jakepatock`, `Convolutional_Neural_Network_for_Dementia_Stage_Detection`, `twitter_handle`, `jake-patock-923089250/`, `gmail`, `jake.r.patock`, `Convolutional Neural Netowrk For Dementia Stage Detection`, `This project involves a CNN model used for predicting the stage of dementia in patients based on transverse MRI brain images. The dataset used by this model was sourced from Kaggle (link: https://www.kaggle.com/datasets/sachinkumar413/alzheimer-mri-dataset). This dataset comprises 6,400 128x128-pixel images of transverse brain MRI scans from patients at varying dementia stages. The dataset consists of four classes: Class 1 (mildly demented) includes 896 images; Class 2 (moderately demented) has 64 images; Class 3 (non-demented) comprises 3,200 images; and Class 4 (very mildly demented) contains 2,240 images. Notably, the dataset is imbalanced across its class representation.
-
-The dataset was divided into 80% for training and 20% for validation, and the images were converted into a single grayscale channel tensor. A batch size of 64 images per batch was utilized in the data loader. The CNN structure consisted of 5 convolutional layers with a max-pooling layer interspersed among them. The channel sizes progressed in the order of 1, 64, 128, 256, 512, and 512. The final pooling layer was flattened and connected to three fully connected linear layers. After the first two linear layers, dropout of 0.5 was introduced to prevent overfitting. The sizes of these linear layers were as follows: 8192 neurons, 1024 neurons, 256 neurons, and finally 4 neurons.
-
-The model utilized cross-entropy loss for multi-class classification and was optimized using the Adam optimizer. Evaluation was performed using a weighted F1 score, biased towards recall due to the medical nature of the data. The model prioritized avoiding false negatives, as they might lead to patients' symptom dismissal and delayed dementia diagnosis, potentially impacting treatment effectiveness. False positives were deemed less damaging, leading to closer patient inspection and continued testing which results in little harm to the pacient.
-
-Training incorporated an early stopper (with a pacients of 50 epochs) based on maximizing the F1 score on the validation set. The final F1 score on the validation set was [insert F1 score], with an accuracy of [insert accuracy] and loss of [insert loss]. The model achieved an accuracy and loss of [insert accuracy] and [insert loss] on the training data. A figure in the data directory showcases a comparison plot between the model's training and validation accuracy and loss, along with a plot of the F1 scores during training.`
+This project
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -107,9 +90,9 @@ Training incorporated an early stopper (with a pacients of 50 epochs) based on m
 
 * [![Static Badge](https://img.shields.io/badge/Python-3.10.10-yellow?logo=python)][python-url]
 * [![Pytorch](https://img.shields.io/badge/Pytorch-2.1.2%2Bcu121-red?logo=pytorch)](https://pytorch.org/)
-* [![Static Badge](https://img.shields.io/badge/Matplotlib-3.8.2-black)](https://matplotlib.org/)
 * [![Static Badge](https://img.shields.io/badge/Scitkit%20Learn-1.3.2-orange?logo=scikit-learn)](https://scikit-learn.org/stable/)
 * [![Static Badge](https://img.shields.io/badge/Numpy-1.26.2-blue?logo=numpy&logoColor=blue)](https://numpy.org/)
+* [![Static Badge](https://img.shields.io/badge/Matplotlib-3.8.2-black)](https://matplotlib.org/)
 * [![Static Badge](https://img.shields.io/badge/Torchmetrics-1.2.1-purple?logo=torchmetrics&logoColor=blue)](https://lightning.ai/docs/torchmetrics/stable/)
 * [![Static Badge](https://img.shields.io/badge/PIL-1.2.1-white?logo=pillow&logoColor=blue)](https://pypi.org/project/Pillow/)
 * [![Static Badge](https://img.shields.io/badge/ast-green?logo=pillow&logoColor=blue)](https://docs.python.org/3/library/ast.html)
