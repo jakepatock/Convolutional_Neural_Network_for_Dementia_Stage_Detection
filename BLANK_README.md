@@ -119,6 +119,32 @@ Examples:
   pip3 install torch torchvision torchaudio
   ```
 
+The result of the packages can be installed using pip with the following commands:
+* Scikit-Learn
+  ```sh
+  pip install scikit-learn==1.3.2
+  ```
+* Numpy
+  ```
+  pip install numpy==1.26.2
+  ```
+* Matplotlib
+  ```sh
+  pip install matplotlib==3.2.2
+  ```
+* Torchmetrics
+  ```sh
+  pip install torchmetrics==1.2.1
+  ```
+* PIL
+  ```sh
+  pip install Pillow==1.2.1
+  ```
+* AST
+  ```
+  pip install ast
+  ```
+
 ### Installation
 
 1. Get a free API Key at [https://example.com](https://example.com)
