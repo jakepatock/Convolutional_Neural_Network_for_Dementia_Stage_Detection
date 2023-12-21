@@ -107,12 +107,12 @@ Training incorporated an early stopper (with a pacients of 50 epochs) based on m
 
 * [![Python][python]][python-url]
 * [![Pytorch](https://img.shields.io/badge/Pytorch-2.1.2%2Bcu121-red?logo=pytorch)](https://pytorch.org/)
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+* [![Static Badge](https://img.shields.io/badge/Matplotlib-3.8.2-black)](https://matplotlib.org/)
+* [![Static Badge](https://img.shields.io/badge/Scitkit%20Learn-1.3.2-orange?logo=scikit-learn)](https://scikit-learn.org/stable/)
+* [![Static Badge](https://img.shields.io/badge/Numpy-1.26.2-blue?logo=numpy&logoColor=blue)](https://numpy.org/)
+* [![Static Badge](https://img.shields.io/badge/Torchmetrics-1.2.1-purple?logo=torchmetrics&logoColor=blue)](https://lightning.ai/docs/torchmetrics/stable/)
+* [![Static Badge](https://img.shields.io/badge/PIL-1.2.1-white?logo=pillow&logoColor=blue)](https://pypi.org/project/Pillow/)
+* [![Static Badge](https://img.shields.io/badge/ast-green?logo=pillow&logoColor=blue)](https://docs.python.org/3/library/ast.html)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
