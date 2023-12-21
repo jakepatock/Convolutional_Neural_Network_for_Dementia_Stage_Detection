@@ -26,7 +26,7 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 <div style="display: flex;">
-  <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Moderate_Demented/moderate_1.jpg" alt="Moderate Demented" style="flex: 5%; padding: 10px;">
+  <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Moderate_Demented/moderate_1.jpg" alt="Moderate Demented" style="flex: 25%; padding: 10px;">
 
   <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Mild_Demented/mild_1.jpg" alt="Mild Demented" style="flex: 25%; padding: 10px;">
 
@@ -37,11 +37,11 @@
 
 *Moderate Demented.*
 
-*Caption for the second image.*
+*Mild Demented.*
 
-*Caption for the third image.*
+*Very Mild Demented.*
 
-*Caption for the fourth image.*
+*Non Demented.*
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
