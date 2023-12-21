@@ -25,6 +25,7 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
+![Moderate Demented](https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Moderate_Demented/moderate_1.jpg)
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
