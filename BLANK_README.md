@@ -199,6 +199,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [ ] Early Stopper 
 - [ ] Plot of Model Training
 - [ ] Prediction of Dementia Stage from Transverse Axial MRI Brain Image
+
 See the [open issues](https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/issues) for a full list of known issues.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
