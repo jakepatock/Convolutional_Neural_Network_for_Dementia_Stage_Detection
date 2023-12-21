@@ -25,7 +25,7 @@ random.seed(random_seed)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 #data path to directory with sub directories that contain images of subdirectory class
-data = r'C:\Users\1234z\Desktop\Jakes Stuff\Dataset'
+data = r'dataset'
 
 #fuction that takes list of different transfomration to apply to the list of images, converting to tensor and grayscale
 tensor_gray_transformation = tv.transforms.Compose([tv.transforms.ToTensor(), transforms.Grayscale(num_output_channels=1)])
@@ -323,15 +323,15 @@ while True:
         print(f'Current Patience: {early_stopper.get_current_pacients()}')
         print()
 
-torch.save(model.state_dict(), r'C:\Users\1234z\Desktop\Jakes Stuff\model_results\model.pth')
+torch.save(model.state_dict(), r'model_results\model.pth')
 
-with open(r'C:\Users\1234z\Desktop\Jakes Stuff\model_results\training_loss.txt', 'w+') as file:
+with open(r'model_results\16_batch_data\training_loss.txt', 'w+') as file:
     file.write(str(training_loss_lst))
-with open(r'C:\Users\1234z\Desktop\Jakes Stuff\model_results\training_accuracy.txt', 'w+') as file:
+with open(r'model_results\16_batch_data\training_accuracy.txt', 'w+') as file:
     file.write(str(training_accuracy_lst))
-with open(r'C:\Users\1234z\Desktop\Jakes Stuff\model_results\test_loss.txt', 'w+') as file:
+with open(r'model_results\16_batch_data\test_loss.txt', 'w+') as file:
     file.write(str(test_loss_lst))
-with open(r'C:\Users\1234z\Desktop\Jakes Stuff\model_results\test_accuracy.txt', 'w+') as file:
+with open(r'model_results\16_batch_data\test_accuracy.txt', 'w+') as file:
     file.write(str(test_acc_lst))
-with open(r'C:\Users\1234z\Desktop\Jakes Stuff\model_results\f1_score.txt', 'w+') as file:
+with open(r'model_results\16_batch_data\f1_score.txt', 'w+') as file:
     file.write(str(f1_score_lst))

@@ -10,23 +10,23 @@ import torchvision.transforms as transforms
 from PIL import Image
 import ast
 
-with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\test_accuracy.txt', 'r') as file:
+with open(r'model_results\16_batch_data\test_accuracy.txt', 'r') as file:
     content = file.read()
     test_accruacy = ast.literal_eval(content)
 
-with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\test_loss.txt', 'r') as file:
+with open(r'model_results\16_batch_data\test_loss.txt', 'r') as file:
     content = file.read()
     test_loss = ast.literal_eval(content)
 
-with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\training_accuracy.txt', 'r') as file:
+with open(r'model_results\16_batch_data\training_accuracy.txt', 'r') as file:
     content = file.read()
     train_accruacy = ast.literal_eval(content)
 
-with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\training_loss.txt', 'r') as file:
+with open(r'model_results\16_batch_data\training_loss.txt', 'r') as file:
     content = file.read()
     train_loss = ast.literal_eval(content)
 
-with open(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\f1_score.txt', 'r') as file:
+with open(r'model_results\16_batch_data\f1_score.txt', 'r') as file:
     content = file.read()
     f1_score = ast.literal_eval(content)
 
@@ -69,6 +69,6 @@ ax3.set_ylim(0, 1.1)
 fig.suptitle('Batch size = 16, Batch norm')
 
 plt.subplots_adjust(wspace=0.2)
-fig.savefig(r'C:\Users\1234z\Desktop\Jakes Stuff\Data\CNN_Eval_Plot')
+fig.savefig(r'model_results\plots\CNN_Eval_Plot')
 plt.show()
 

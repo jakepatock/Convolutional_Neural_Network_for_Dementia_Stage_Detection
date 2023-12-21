@@ -59,7 +59,7 @@
 <h3 align="center">Convolutional Neural Network for Dementia Stage Detection</h3>
 
   <p align="left">
-    This project involves a CNN model used for predicting the stage of dementia in patients based on transverse MRI brain images. The dataset used by this model was sourced from Kaggle (link: https://www.kaggle.com/datasets/sachinkumar413/alzheimer-mri-dataset). This dataset comprises 6,400 128x128-pixel images of transverse brain MRI scans from patients at varying dementia stages. The dataset consists of four classes: Class 1 (mildly demented) includes 896 images; Class 2 (moderately demented) has 64 images; Class 3 (non-demented) comprises 3,200 images; and Class 4 (very mildly demented) contains 2,240 images. Notably, the dataset is imbalanced across its class representation.
+    This project involves a CNN model used for predicting the stage of dementia in patients based on axial transverse MRI brain images. The dataset used by this model was sourced from Kaggle (link: https://www.kaggle.com/datasets/sachinkumar413/alzheimer-mri-dataset). This dataset comprises 6,400 128x128-pixel images of transverse brain MRI scans from patients at varying dementia stages. The dataset consists of four classes: Class 1 (mildly demented) includes 896 images; Class 2 (moderately demented) has 64 images; Class 3 (non-demented) comprises 3,200 images; and Class 4 (very mildly demented) contains 2,240 images. Notably, the dataset is imbalanced across its class representation.
 
 The dataset was divided into 80% for training and 20% for validation, and the images were converted into a single grayscale channel tensor. A batch size of 64 images per batch was utilized in the data loader. The CNN structure consisted of 5 convolutional layers with a max-pooling layer interspersed among them. The channel sizes progressed in the order of 1, 64, 128, 256, 512, and 512. The final pooling layer was flattened and connected to three fully connected linear layers. After the first two linear layers, dropout of 0.5 was introduced to prevent overfitting. The sizes of these linear layers were as follows: 8192 neurons, 1024 neurons, 256 neurons, and finally 4 neurons.
 
@@ -101,7 +101,7 @@ This project requires the installation of a python 3.8-3.10 and few libraries to
 
 ### Prerequisites
 
-Pytorch supports python verions of 3.8-3.10. This project uses python 3.10.10. The project used the gpu cuda version of pytorch. Alternatively, you can can use the slower cpu version of pytorch if hardware is not available (cuda is not avaliable on MacOS). Commands for all operating systems can be found on the link below.
+Pytorch supports python verions of 3.8-3.10. This project uses python 3.10.10 with pip used for package installation. The project used the gpu cuda version of pytorch. Alternatively, you can can use the slower cpu version of pytorch if hardware is not available (cuda is not avaliable on MacOS). Commands for all operating systems can be found on the link below.
 
 [![Static Badge](https://img.shields.io/badge/Torch-Install-red?logo=pytorch)](https://pytorch.org/get-started/locally/)
 
@@ -119,7 +119,7 @@ Examples:
   pip3 install torch torchvision torchaudio
   ```
 
-The result of the packages can be installed using pip with the following commands:
+The rest of the packages can be installed using pip with the following commands:
 * Scikit-Learn
   ```sh
   pip install scikit-learn==1.3.2
@@ -168,7 +168,7 @@ The result of the packages can be installed using pip with the following command
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+This project is a good template to start with went trying to build a CNN for medical image classification. The project includes auxiliary pytroch interfaced functions that normalize the medical dataset as well as early stoppers classes that can use loss or f1 score as their evaluation metric. It is also configured for reproducability producing a easy way to study the effects of changes to the model. The model uses the standard parts of a CNN (pooling layers, convolutional layers, fully connected layers, ReLU activation, and dropout) and adds batch normalization in between each layer as well. However, this project is rather simple and has not been tested extensivly on data that is not present in the original dataset due to my lack of access to private medical imaging. The model performs well on the training and validation datasets but the currnet ability for hte model to generalizat outside of these datasets is unknown. However, this model is a great learning tool for people trying to learn convolutional neural networks and pytorch in general.
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
