@@ -18,10 +18,6 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-<div style="display: flex; justify-content: center; gap: 20px;">
-  <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Moderate_Demented/moderate_1.jpg" alt="Moderate Demented" style="flex: 25%; padding: 10px; margin-left: auto; margin-right: auto;">
-</div>
-
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -39,13 +35,8 @@
   <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Non_Demented/non_1.jpg" alt="Non Demented" style="flex: 25%; margin-left: auto; padding: 10px;">
 </div>
 
-*Moderate Demented.*
+*Moderate Demented.* *Mild Demented.* *Very Mild Demented.* *Non Demented.*
 
-*Mild Demented.*
-
-*Very Mild Demented.*
-
-*Non Demented.*
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
