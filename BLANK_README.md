@@ -56,7 +56,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<h3 align="center">Convolutional_Neural_Network_for_Dementia_Stage_Detection</h3>
+<h3 align="center">Convolutional Neural Network for Dementia Stage Detection</h3>
 
   <p align="left">
     This project involves a CNN model used for predicting the stage of dementia in patients based on transverse MRI brain images. The dataset used by this model was sourced from Kaggle (link: https://www.kaggle.com/datasets/sachinkumar413/alzheimer-mri-dataset). This dataset comprises 6,400 128x128-pixel images of transverse brain MRI scans from patients at varying dementia stages. The dataset consists of four classes: Class 1 (mildly demented) includes 896 images; Class 2 (moderately demented) has 64 images; Class 3 (non-demented) comprises 3,200 images; and Class 4 (very mildly demented) contains 2,240 images. Notably, the dataset is imbalanced across its class representation.
@@ -97,16 +97,26 @@ Training incorporated an early stopper (with a pacients of 50 epochs) based on m
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+This project requires the installation of a python 3.8-3.10 and few libraries to get started. The dependencies of this project include the libraries of pytorch, scikit learn, numpy, matplotlib, torchmetrics, PIL ,and ast.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
+Pytorch supports python verions of 3.8-3.10. This project uses python 3.10.10. The project used the gpu cuda version of pytorch. Alternatively, you can can use the slower cpu version of pytorch if hardware is not available (cuda is not avaliable on MacOS). Commands for all operating systems can be found on the link below.
+[![Static Badge](https://img.shields.io/badge/Torch-Install-red?logo=pytorch)](https://pytorch.org/get-started/locally/)
+
+Examples:
+* Pytorch cuda for Windows
   ```sh
-  npm install npm@latest -g
+  pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
   ```
+* Pytorch cuda for Linux
+  '''sh
+  pip3 install torch torchvision torchaudio
+  '''
+* Pytorch cpu version for Windows
+  '''sh
+  pip3 install torch torchvision torchaudio
+  '''
 
 ### Installation
 
