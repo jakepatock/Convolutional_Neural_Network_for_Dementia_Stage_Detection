@@ -25,10 +25,23 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-![Moderate Demented](https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Moderate_Demented/moderate_1.jpg)
+<div style="display: flex;">
+  <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Moderate_Demented/moderate_1.jpg" alt="Moderate Demented" style="flex: 25%; padding: 5px;">
 
-*Moderetly Demented Class.*
+  <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Mild_Demented/mild_1.jpg" alt="Mild Demented" style="flex: 25%; padding: 5px;">
 
+  <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Very_Mild_Demented/verymild_1.jpg" alt="Very Mild Demented" style="flex: 25%; padding: 5px;">
+
+  <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Non_Demented/non_1.jpg" alt="Non Demented" style="flex: 25%; padding: 5px;">
+</div>
+
+*Moderate Demented.*
+
+*Caption for the second image.*
+
+*Caption for the third image.*
+
+*Caption for the fourth image.*
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
