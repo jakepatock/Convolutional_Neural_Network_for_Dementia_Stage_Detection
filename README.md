@@ -25,14 +25,14 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-<div style="display: flex; justify-content: flex-end;">
-  <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Moderate_Demented/moderate_1.jpg" alt="Moderate Demented" style="flex: 25%; padding: 10px;">
+<div style="display: flex; justify-content: flex-end; gap: 20px;">
+  <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Moderate_Demented/moderate_1.jpg" alt="Moderate Demented" style="flex: 25%; margin-left: auto; padding: 10px;">
 
-  <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Mild_Demented/mild_1.jpg" alt="Mild Demented" style="flex: 25%; padding: 10px;">
+  <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Mild_Demented/mild_1.jpg" alt="Mild Demented" style="flex: 25%; margin-left: auto; padding: 10px;">
 
-  <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Very_Mild_Demented/verymild_1.jpg" alt="Very Mild Demented" style="flex: 25%; padding: 10px;">
+  <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Very_Mild_Demented/verymild_1.jpg" alt="Very Mild Demented" style="flex: 25%; margin-left: auto; padding: 10px;">
 
-  <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Non_Demented/non_1.jpg" alt="Non Demented" style="flex: 25%; padding: 10px;">
+  <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Non_Demented/non_1.jpg" alt="Non Demented" style="flex: 25%; margin-left: auto; padding: 10px;">
 </div>
 
 *Moderate Demented.*
