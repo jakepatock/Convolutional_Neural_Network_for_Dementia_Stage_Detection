@@ -108,6 +108,6 @@ def dementia_stage_prediction(path):
     print(classes[predicted_class])
 
 #replace this path variable with the path to a transverse axiel mri image
-path = r'75yo_male.jpg'
+path = r'test_images\75yo_male.jpg'
 #will print the predicted class to console
-dementia_stage_prediction()
+dementia_stage_prediction(path)
