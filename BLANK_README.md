@@ -197,7 +197,8 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [ ] Cross Entropy Loss
 - [ ] Adam Optimizer
 - [ ] Early Stopper 
-
+- [ ] Plot of Model Training
+- [ ] Prediction of Dementia Stage from Transverse Axial MRI Brain Image
 See the [open issues](https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/issues) for a full list of known issues.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -239,19 +240,6 @@ Jake Patock - [@jakepatock](https://twitter.com/jakepatock) - jake.r.patock@gmai
 Project Link: [https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection](https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
