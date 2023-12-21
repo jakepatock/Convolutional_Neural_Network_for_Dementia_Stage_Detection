@@ -152,14 +152,14 @@ The rest of the packages can be installed using pip with the following commands:
   git init
   ```
 2. Clone the repo
-   ```sh
-   git clone https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection.git
-   ```
+  ```sh
+  git clone https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection.git
+  ```
 3. Naviagte into the cloned repo directroy
-   ```sh
-   cd Convolutional_Neural_Network_for_Dementia_Stage_Detection/
-   ```
-   
+  ```sh
+  cd Convolutional_Neural_Network_for_Dementia_Stage_Detection/
+  ```
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -176,14 +176,29 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 
 <!-- ROADMAP -->
-## Roadmap
+## Feature Present in Model
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Pytorch Dataset Loading using ImageFolder
+- [ ] Pytorch Image Dataset Preprocessing
+    - [ ] Normalization
+    - [ ] Tp Tensor
+    - [ ] Grayscale Conversion
+    - [ ] Resizing
+- [ ] Data Partitioning to Traning and Validation Datsets
+- [ ] Utilizing Torch Dataloaders
+    - [ ] Batch size = 16
+- [ ] Convolutional Neural Network Strucutres
+    - [ ] Convlutional Layers
+    - [ ] Batch Normalization
+    - [ ] ReLU Activation
+    - [ ] Max Pooling Layers
+    - [ ] Fully Connected Layers
+    - [ ] Dropout
+- [ ] Cross Entropy Loss
+- [ ] Adam Optimizer
+- [ ] Early Stopper 
 
-See the [open issues](https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/issues) for a full list of known issues.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

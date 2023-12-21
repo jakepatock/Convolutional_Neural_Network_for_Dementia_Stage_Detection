@@ -84,7 +84,7 @@ def dementia_stage_prediction(path):
     std = torch.std(norm_tensor)
 
     #def the preprocessing transfomration for the next step 
-    transform = tv.transforms.Compose([tv.transforms.ToTensor(), transforms.Grayscale(num_output_channels=1), transforms.Normalize(mean, std), transforms.Resize((128, 128))]) 
+    transform = tv.transforms.Compose([tv.transforms.ToTensor(), transforms.Grayscale(num_output_channels=1), transforms.Normalize(mean, std), transforms.Resize((128, 128), antialias=True)]) 
     #preprocessing image adding 4th demention for the input to the CNN layers                     
     tensor = transform(image).unsqueeze(0)
 
