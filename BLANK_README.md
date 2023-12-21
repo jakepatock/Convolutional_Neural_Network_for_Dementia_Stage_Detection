@@ -27,7 +27,8 @@
 
 <h3 align="center">Convolutional_Neural_Network_for_Dementia_Stage_Detection</h3>
 
-
+  <p align="center">
+   
     <br />
     <a href="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection"><strong>Explore the docs »</strong></a>
     <br />
