@@ -26,22 +26,17 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 ## Stages of Dementia
-<table>
-  <tr>
-  <td>
-    <img src="Dataset/Moderate_Demented/moderate_1.jpg" alt="Moderate Demented" style="flex: 25%; margin-left: auto; padding: 10px;">
-  </td>
-  <td>
-  <img src="Dataset/Mild_Demented/mild_1.jpg" alt="Mild Demented" style="flex: 25%; margin-left: auto; padding: 10px;">
-  </td>
-  <img src="Dataset/Very_Mild_Demented/verymild_1.jpg" alt="Very Mild Demented" style="flex: 25%; margin-left: auto; padding: 10px;">
-  <td>
-  <img src="Dataset/Non_Demented/non_1.jpg" alt="Non Demented" style="flex: 25%; margin-left: auto; padding: 10px;">
-  </td>
-    </tr>
-</table>
+<div style="display: flex; justify-content: flex-end; gap: 20px;">
+  <img src="Dataset/Moderate_Demented/moderate_1.jpg" alt="Moderate Demented" style="flex: 25%; margin-left: auto; padding: 10px;">
 
-&nbsp; &nbsp; &nbsp; Moderate &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Mild &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Very Mild &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Non 
+  <img src="Dataset/Mild_Demented/mild_1.jpg" alt="Mild Demented" style="flex: 25%; margin-left: auto; padding: 10px;">
+
+  <img src="Dataset/Very_Mild_Demented/verymild_1.jpg" alt="Very Mild Demented" style="flex: 25%; margin-left: auto; padding: 10px;">
+
+  <img src="Dataset/Non_Demented/non_1.jpg" alt="Non Demented" style="flex: 25%; margin-left: auto; padding: 10px;">
+</div>
+
+&nbsp; &nbsp; &nbsp; Moderate &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Mild &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Very Mild &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Non
 
 <!-- TABLE OF CONTENTS -->
 <details>
