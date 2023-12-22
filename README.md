@@ -26,15 +26,20 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 ## Stages of Dementia
-<div style="display: flex; justify-content: space-between; gap: 20px;">
-  <img src="Dataset/Moderate_Demented/moderate_1.jpg" alt="Moderate Demented" style="flex: 25%; margin-left: auto; padding: 10px;">
-
+<table>
+  <tr>
+  <td>
+    img src="Dataset/Moderate_Demented/moderate_1.jpg" alt="Moderate Demented" style="flex: 25%; margin-left: auto; padding: 10px;">
+  </td>
+  <td>
   <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Mild_Demented/mild_1.jpg" alt="Mild Demented" style="flex: 25%; margin-left: auto; padding: 10px;">
-
+  </td>
   <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Very_Mild_Demented/verymild_1.jpg" alt="Very Mild Demented" style="flex: 25%; margin-left: auto; padding: 10px;">
-
+  <td>
   <img src="https://github.com/jakepatock/Convolutional_Neural_Network_for_Dementia_Stage_Detection/blob/master/Dataset/Non_Demented/non_1.jpg" alt="Non Demented" style="flex: 25%; margin-left: auto; padding: 10px;">
-</div>
+  </td>
+    </tr>
+</table>
 
 &nbsp; &nbsp; &nbsp; Moderate &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Mild &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Very Mild &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Non 
 
