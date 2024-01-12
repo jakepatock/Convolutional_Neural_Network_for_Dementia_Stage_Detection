@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import sklearn.metrics as skm
+import sklearn.model_selection as skms
 import torchvision as tv 
 import torch.utils.data 
 import torchvision.transforms as transforms
@@ -67,25 +68,25 @@ mean, std = image_dataset_normalization(norm_dataset)
 tensor_gray_norm_transformations = tv.transforms.Compose([tv.transforms.ToTensor(), transforms.Grayscale(num_output_channels=1), tv.transforms.Normalize(mean, std)])
 dataset = tv.datasets.ImageFolder(data, transform=tensor_gray_norm_transformations)
 #writting classes to file to use later 
-with open(r'C:\Users\1234z\Desktop\Jakes Stuff\model_results\classes.txt', 'w+') as file:
+with open(r'model_results\classes.txt', 'w+') as file:
     file.write(str(dataset.classes))
 
-#division this data to validation and trianing 
-# 80% for training
-train_size = int(0.8 * len(dataset)) 
-#20% for validation 
-val_size = len(dataset) - train_size 
 
-#split the data into train and val 
-training_data, validation_data = torch.utils.data.random_split(dataset, [train_size, val_size])
+#division this data to validation and traiing 80, 20 in a stratified manner geting index from train_test_split
+lables = dataset.targets
+#first arg passes the list of indexes of all lables and elements, stratified are the lables of the indexes passesd to the function to split hte data in a stratified manner 
+train_idx, val_idx = skms.train_test_split(np.arange(len(lables)), test_size=.2, train_size=.8, random_state=random_seed, shuffle=True, stratify=lables)
+#now transform these list of indexs into pytorch dataset sampler which will be passed to the dataloader 
+train_sample = torch.utils.data.SubsetRandomSampler(train_idx)
+val_sample = torch.utils.data.SubsetRandomSampler(val_idx)
 
 #batch size of the data used due to the fact that loading all the trianing data into ram at one point will not be possible
 #therefore we split it up into batches of training data 
 batch_size = 16
 
-#feeding the datasets to the loader 
-train_loader = torch.utils.data.DataLoader(training_data, batch_size, shuffle=True, pin_memory=True)
-test_loader = torch.utils.data.DataLoader(validation_data, batch_size, pin_memory=True)
+#feeding the datasets to the loader, the sampler list a pytorch object created from a list of indexes that specific what samples will be loaded into that loader
+train_loader = torch.utils.data.DataLoader(dataset, batch_size, pin_memory=True, sampler=train_sample)
+test_loader = torch.utils.data.DataLoader(dataset, batch_size, pin_memory=True, sampler=val_sample)
 
 #init the early stopping class that will be used to stop training after a specified number of epcohs
 #without inprovment to the f1 score
