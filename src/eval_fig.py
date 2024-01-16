@@ -66,9 +66,9 @@ ax3.set_xlabel("Epoch")
 ax3.set_title('F1 Score')
 ax3.set_ylim(0, 1.1)
 
-fig.suptitle('Batch size = 16, Batch norm')
+fig.suptitle('Evaluation Metrics')
 
 plt.subplots_adjust(wspace=0.2)
-fig.savefig(r'model_results\plots\CNN_Eval_Plot_batch16.png')
+fig.savefig(r'model_results\plots\CNN_Eval_Plot.png')
 plt.show()
 

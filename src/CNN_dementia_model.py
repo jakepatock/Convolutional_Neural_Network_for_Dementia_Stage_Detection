@@ -76,18 +76,20 @@ with open(r'model_results\classes.txt', 'w+') as file:
 lables = dataset.targets
 #first arg passes the list of indexes of all lables and elements, stratified are the lables of the indexes passesd to the function to split hte data in a stratified manner 
 train_idx, val_idx = skms.train_test_split(np.arange(len(lables)), test_size=.2, train_size=.8, random_state=random_seed, shuffle=True, stratify=lables)
+
 #now transform these list of indexs into pytorch dataset sampler which will be passed to the dataloader 
-train_sample = torch.utils.data.SubsetRandomSampler(train_idx)
-val_sample = torch.utils.data.SubsetRandomSampler(val_idx)
+train_sample = torch.utils.data.Subset(dataset, train_idx)
+val_sample = torch.utils.data.Subset(dataset, val_idx)
 
 #batch size of the data used due to the fact that loading all the trianing data into ram at one point will not be possible
 #therefore we split it up into batches of training data 
 batch_size = 16
 
 #feeding the datasets to the loader, the sampler list a pytorch object created from a list of indexes that specific what samples will be loaded into that loader
-train_loader = torch.utils.data.DataLoader(dataset, batch_size, pin_memory=True, sampler=train_sample)
-test_loader = torch.utils.data.DataLoader(dataset, batch_size, pin_memory=True, sampler=val_sample)
-
+train_loader = torch.utils.data.DataLoader(train_sample, batch_size, pin_memory=True)
+test_loader = torch.utils.data.DataLoader(val_sample, batch_size, pin_memory=True)
+print(len(train_loader.dataset))
+print(len(test_loader.dataset))
 #init the early stopping class that will be used to stop training after a specified number of epcohs
 #without inprovment to the f1 score
 class Early_Stopping_F1():
@@ -218,9 +220,8 @@ while True:
     #set model into training mode 
     model.train()
     #setting running loss, correct, and total varibles for this epoch 
-    running_loss = 0 
-    correct = 0
-    total = 0
+    train_running_loss = 0 
+    train_correct_pred = 0
     
     for features, labels in train_loader:
         #setting the device 
@@ -228,27 +229,27 @@ while True:
         #clear optimizer
         optimizer.zero_grad()
         #get y predicted
-        predicted_labels = model(features)
+        train_predicted_labels = model(features)
 
         #get loss 
-        batch_loss = loss_func(predicted_labels, labels)
-        #calculated direction of gradient
-        batch_loss.backward()
-        #get the new theta
-        optimizer.step()
+        train_batch_loss = loss_func(train_predicted_labels, labels)
         #multipe the loss by the size of the batch to scale it to make the loss 
         #representative of the loss across the entire batch (accounts for batch of different sizes)
-        running_loss += batch_loss.item() * features.size(0)
+        train_running_loss += train_batch_loss.item() * len(labels)
+
+        #calculated direction of gradient
+        train_batch_loss.backward()
+        #get the new theta
+        optimizer.step()
 
         #getting accuracy 
-        total += labels.size(0)
-        predicted_arg = torch.argmax(predicted_labels, dim=1)
-        correct += (predicted_arg == labels).sum().item()
+        train_predicted_arg = torch.argmax(train_predicted_labels, dim=1)
+        train_correct_pred += (train_predicted_arg == labels).sum().item()
 
     #calculating the loss for this epoch
-    train_loss = running_loss / len(train_loader.dataset)
+    train_loss = train_running_loss / len(train_loader.dataset)
     #getting the accuracy for this epoch 
-    training_accuracy = correct / total
+    training_accuracy = train_correct_pred / len(train_loader.dataset)
 
     #printing status of loss and accuracy to consle
     epoch += 1
@@ -258,9 +259,8 @@ while True:
     #evaluating the model 
     model.eval()
     #init all varibles to track accuracy and loss 
-    test_loss_cul = 0
-    correct = 0
-    total = 0 
+    test_running_loss = 0 
+    test_correct_pred = 0
 
     #these will be used to calculate the f1 score for this current epoch on the training data
     cul_predictions = torch.tensor([]).to(device)
@@ -271,28 +271,24 @@ while True:
             #setting to run on cuda 
             features, labels = features.to(device), labels.to(device)
             #calculating predicted 
-            predicted_labels = model(features)
+            test_predicted_labels = model(features)
 
             #getting loss from labels 
-            test_batch_loss = loss_func(predicted_labels, labels)
-            test_loss_cul += test_batch_loss.item() * features.size(0) 
+            test_batch_loss = loss_func(test_predicted_labels, labels)
+            test_running_loss += test_batch_loss.item() * len(labels)
 
-            #getting accuracy
-            #getting size of batch 
-            total += labels.size(0)
-            #getting the predicted label 
-            predicted_arg = torch.argmax(predicted_labels, dim=1)
-            #counting how many correct labels there are 
-            correct += (predicted_arg == labels).sum().item()
+            #getting accuracy 
+            test_predicted_arg = torch.argmax(test_predicted_labels, dim=1)
+            test_correct_pred += (test_predicted_arg == labels).sum().item()
 
             #getting cul prediction and labels to use for f1
-            cul_predictions = torch.cat((cul_predictions, predicted_arg))
+            cul_predictions = torch.cat((cul_predictions, test_predicted_arg))
             cul_labels = torch.cat((cul_labels, labels))
             
         #getting loss 
-        test_loss = test_loss_cul / len(test_loader.dataset)
+        test_loss = test_running_loss / len(test_loader.dataset)
         #getting accuracy 
-        test_accuracy = correct / total
+        test_accuracy = test_correct_pred / len(test_loader.dataset)
 
         #getting f1 score 
         #average = 'macro' calculates the average f1 scored for each class and averages them 
