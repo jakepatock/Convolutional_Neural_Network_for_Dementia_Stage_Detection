@@ -88,8 +88,7 @@ batch_size = 16
 #feeding the datasets to the loader, the sampler list a pytorch object created from a list of indexes that specific what samples will be loaded into that loader
 train_loader = torch.utils.data.DataLoader(train_sample, batch_size, pin_memory=True)
 test_loader = torch.utils.data.DataLoader(val_sample, batch_size, pin_memory=True)
-print(len(train_loader.dataset))
-print(len(test_loader.dataset))
+
 #init the early stopping class that will be used to stop training after a specified number of epcohs
 #without inprovment to the f1 score
 class Early_Stopping_F1():

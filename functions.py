@@ -34,6 +34,7 @@ class Early_stopping_loss():
         self.current_patience = 0
         self.min_loss = float('inf')
         self.min_state_dict = None
+        self.epoch = 0
 
     def stopper(self, current_model,  test_loss):
         if test_loss < self.min_loss:
@@ -51,14 +52,25 @@ class Early_stopping_loss():
     def get_state_dict(self):
         return self.min_state_dict
     
-class Early_stopping_F1():
+    def get_current_pacients(self):
+        return self.current_patience
+    
+    def get_min_loss(self):
+        return self.min_loss
+    
+    def get_kept_epoch(self):
+        return self.epoch - self._patience
+
+class Early_Stopping_F1():
     def __init__(self, patience):
         self._patience = patience
         self.current_patience = 0
         self.max_f1 = float('-inf')
         self.min_state_dict = None
+        self.epoch = 0
 
     def stopper(self, current_model, f1):
+        self.epoch += 1
         if f1 > self.max_f1:
             self.max_f1 = f1
             self.current_patience = 0
@@ -72,7 +84,16 @@ class Early_stopping_F1():
             return False
         
     def get_state_dict(self):
-        return self.min_state_dict
+        return self.min_state_dict  
+    
+    def get_current_pacients(self):
+        return self.current_patience
+    
+    def get_max_f1(self):
+        return self.max_f1
+    
+    def get_kept_epoch(self):
+        return self.epoch - self._patience
     
 def standardize_numpy(X):
     """
