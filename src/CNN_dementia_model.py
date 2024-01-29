@@ -91,20 +91,21 @@ test_loader = torch.utils.data.DataLoader(val_sample, batch_size, pin_memory=Tru
 
 #init the early stopping class that will be used to stop training after a specified number of epcohs
 #without inprovment to the f1 score
-class Early_Stopping_F1():
+class Early_stopping_loss():
     def __init__(self, patience):
         self._patience = patience
         self.current_patience = 0
-        self.max_f1 = float('-inf')
+        self.min_loss = float('inf')
         self.min_state_dict = None
         self.epoch = 0
 
-    def stopper(self, current_model, f1):
+    def stopper(self, current_model,  test_loss):
         self.epoch += 1
-        if f1 > self.max_f1:
-            self.max_f1 = f1
+        if test_loss < self.min_loss:
+            self.min_loss = test_loss
             self.current_patience = 0
             self.min_state_dict = current_model.state_dict()
+
         else:
             self.current_patience += 1
             
@@ -119,8 +120,8 @@ class Early_Stopping_F1():
     def get_current_pacients(self):
         return self.current_patience
     
-    def get_max_f1(self):
-        return self.max_f1
+    def get_min_loss(self):
+        return self.min_loss
     
     def get_kept_epoch(self):
         return self.epoch - self._patience
@@ -197,14 +198,14 @@ class CNN(nn.Module):
 model = CNN(len(dataset.classes))
 model.to(device)
 
-#loss function
+#loss function, contains softmax already 
 loss_func = nn.CrossEntropyLoss()
 
 #optimizer 
 optimizer = torch.optim.Adam(model.parameters())
 
 #init early stopper 
-early_stopper = Early_Stopping_F1(50)
+early_stopper = Early_stopping_loss(30)
 
 #list to track accuracy and loss 
 training_loss_lst = []
@@ -307,13 +308,13 @@ while True:
 
     #earlier stopper condition check to see if the pacients of the model has run out 
     #if it has revert model to highest f1 
-    if early_stopper.stopper(model, f1):
+    if early_stopper.stopper(model, test_loss):
         state_dict = early_stopper.get_state_dict()
         model.load_state_dict(state_dict)
-        max_f1 = early_stopper.get_max_f1()
+        min_loss = early_stopper.get_min_loss()
         kept_epoch = early_stopper.get_kept_epoch()
         print()
-        print(f'Kept Epoch: {kept_epoch}, Max F1: {max_f1}')
+        print(f'Kept Epoch: {kept_epoch}, Min Loss: {min_loss}')
         break
     else:
         print(f'Current Patience: {early_stopper.get_current_pacients()}')
