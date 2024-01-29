@@ -1,0 +1,1 @@
+Kept Model, Epoch: 25, Train Loss: 0.028394215618527598, Val Loss: 0.04419510681909742, Train Accuracy: 0.9904296875, Val Accuracy: 0.98125

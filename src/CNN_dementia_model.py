@@ -72,7 +72,7 @@ with open(r'model_results\classes.txt', 'w+') as file:
     file.write(str(dataset.classes))
 
 
-#division this data to validation and traiing 80, 20 in a stratified manner geting index from train_test_split
+#division this data to validation and traiing 80, 20 in a stratified manner geting index from train_val_split
 lables = dataset.targets
 #first arg passes the list of indexes of all lables and elements, stratified are the lables of the indexes passesd to the function to split hte data in a stratified manner 
 train_idx, val_idx = skms.train_test_split(np.arange(len(lables)), test_size=.2, train_size=.8, random_state=random_seed, shuffle=True, stratify=lables)
@@ -87,7 +87,7 @@ batch_size = 16
 
 #feeding the datasets to the loader, the sampler list a pytorch object created from a list of indexes that specific what samples will be loaded into that loader
 train_loader = torch.utils.data.DataLoader(train_sample, batch_size, pin_memory=True)
-test_loader = torch.utils.data.DataLoader(val_sample, batch_size, pin_memory=True)
+val_loader = torch.utils.data.DataLoader(val_sample, batch_size, pin_memory=True)
 
 #init the early stopping class that will be used to stop training after a specified number of epcohs
 #without inprovment to the f1 score
@@ -96,15 +96,21 @@ class Early_stopping_loss():
         self._patience = patience
         self.current_patience = 0
         self.min_loss = float('inf')
+        self.val_accuracy = None
         self.min_state_dict = None
+        self.train_loss = None
+        self.train_accuracy = None
         self.epoch = 0
 
-    def stopper(self, current_model,  test_loss):
+    def stopper(self, current_model,  val_loss, train_loss, val_accuracy, train_accuracy):
         self.epoch += 1
-        if test_loss < self.min_loss:
-            self.min_loss = test_loss
+        if val_loss < self.min_loss:
+            self.min_loss = val_loss
             self.current_patience = 0
+            self.train_loss = train_loss
             self.min_state_dict = current_model.state_dict()
+            self.val_accuracy = val_accuracy
+            self.train_accuracy = train_accuracy
 
         else:
             self.current_patience += 1
@@ -117,7 +123,7 @@ class Early_stopping_loss():
     def get_state_dict(self):
         return self.min_state_dict  
     
-    def get_current_pacients(self):
+    def get_current_patience(self):
         return self.current_patience
     
     def get_min_loss(self):
@@ -125,12 +131,18 @@ class Early_stopping_loss():
     
     def get_kept_epoch(self):
         return self.epoch - self._patience
+    
+    def get_final_stats(self):
+        return self.epoch - self._patience, self.train_loss, self.min_loss, self.train_accuracy, self.val_accuracy
+    
 
 #setting up the model 
 class CNN(nn.Module):
-    def __init__(self, num_classes):
+    def __init__(self, num_classes, l2_reg=0):
         super(CNN, self).__init__()
         self.num_classes = num_classes
+        self.l2_reg = l2_reg
+
         self._forward = nn.Sequential(
         #conv layer 1 
         nn.Conv2d(in_channels=1, out_channels=64, kernel_size=3, padding=1, stride=1),
@@ -194,24 +206,26 @@ class CNN(nn.Module):
     def forward(self, x):
         return self._forward(x)
 
+
 #init model 
-model = CNN(len(dataset.classes))
+model = CNN(len(dataset.classes), l2_reg=.00001)
 model.to(device)
 
 #loss function, contains softmax already 
 loss_func = nn.CrossEntropyLoss()
 
 #optimizer 
-optimizer = torch.optim.Adam(model.parameters())
+#adding l2 regulatization in weigh decay parameter 
+optimizer = torch.optim.Adam(model.parameters(), weight_decay=model.l2_reg)
 
 #init early stopper 
-early_stopper = Early_stopping_loss(30)
+early_stopper = Early_stopping_loss(20)
 
 #list to track accuracy and loss 
 training_loss_lst = []
 training_accuracy_lst = []
-test_loss_lst = []
-test_acc_lst = []
+val_loss_lst = []
+val_acc_lst = []
 f1_score_lst = []
 
 #training loop
@@ -259,36 +273,36 @@ while True:
     #evaluating the model 
     model.eval()
     #init all varibles to track accuracy and loss 
-    test_running_loss = 0 
-    test_correct_pred = 0
+    val_running_loss = 0 
+    val_correct_pred = 0
 
     #these will be used to calculate the f1 score for this current epoch on the training data
     cul_predictions = torch.tensor([]).to(device)
     cul_labels = torch.tensor([]).to(device)
 
     with torch.no_grad():
-        for features, labels in test_loader:
+        for features, labels in val_loader:
             #setting to run on cuda 
             features, labels = features.to(device), labels.to(device)
             #calculating predicted 
-            test_predicted_labels = model(features)
+            val_predicted_labels = model(features)
 
             #getting loss from labels 
-            test_batch_loss = loss_func(test_predicted_labels, labels)
-            test_running_loss += test_batch_loss.item() * len(labels)
+            val_batch_loss = loss_func(val_predicted_labels, labels)
+            val_running_loss += val_batch_loss.item() * len(labels)
 
             #getting accuracy 
-            test_predicted_arg = torch.argmax(test_predicted_labels, dim=1)
-            test_correct_pred += (test_predicted_arg == labels).sum().item()
+            val_predicted_arg = torch.argmax(val_predicted_labels, dim=1)
+            val_correct_pred += (val_predicted_arg == labels).sum().item()
 
             #getting cul prediction and labels to use for f1
-            cul_predictions = torch.cat((cul_predictions, test_predicted_arg))
+            cul_predictions = torch.cat((cul_predictions, val_predicted_arg))
             cul_labels = torch.cat((cul_labels, labels))
             
         #getting loss 
-        test_loss = test_running_loss / len(test_loader.dataset)
+        val_loss = val_running_loss / len(val_loader.dataset)
         #getting accuracy 
-        test_accuracy = test_correct_pred / len(test_loader.dataset)
+        val_accuracy = val_correct_pred / len(val_loader.dataset)
 
         #getting f1 score 
         #average = 'macro' calculates the average f1 scored for each class and averages them 
@@ -296,28 +310,27 @@ while True:
         f1 = skm.fbeta_score(cul_predictions.cpu().numpy(), cul_labels.cpu().numpy(), average="weighted", beta=2)
     
     #printing status to consel
-    print(f"Test: Loss = {test_loss}, Accuracy = {test_accuracy}, F-1 Score = {f1}")
+    print(f"Val: Loss = {val_loss}, Accuracy = {val_accuracy}, F-1 Score = {f1}")
     
 
     #adding loss, accuracy, and f1 score to the lists that will be used to produce a plot of the progress of the model 
     training_loss_lst.append(train_loss)
     training_accuracy_lst.append(training_accuracy)
-    test_loss_lst.append(test_loss)
-    test_acc_lst.append(test_accuracy)
+    val_loss_lst.append(val_loss)
+    val_acc_lst.append(val_accuracy)
     f1_score_lst.append(float(f1))
 
     #earlier stopper condition check to see if the pacients of the model has run out 
     #if it has revert model to highest f1 
-    if early_stopper.stopper(model, test_loss):
+    if early_stopper.stopper(model, val_loss, train_loss, val_accuracy, training_accuracy):
         state_dict = early_stopper.get_state_dict()
         model.load_state_dict(state_dict)
-        min_loss = early_stopper.get_min_loss()
-        kept_epoch = early_stopper.get_kept_epoch()
+        kept_epoch, final_train_loss, final_val_loss, final_train_accuracy, final_val_accuracy = early_stopper.get_final_stats()
         print()
-        print(f'Kept Epoch: {kept_epoch}, Min Loss: {min_loss}')
+        print(f'Kept Epoch: {kept_epoch}, Train Loss: {final_train_loss}, Val Loss: {final_val_loss}, Train Accuracy: {final_train_accuracy}, Val Accuracy: {final_val_accuracy}')
         break
     else:
-        print(f'Current Patience: {early_stopper.get_current_pacients()}')
+        print(f'Current Patience: {early_stopper.get_current_patience()}')
         print()
 
 torch.save(model.state_dict(), r'model_results\model.pth')
@@ -326,9 +339,11 @@ with open(r'model_results\16_batch_data\training_loss.txt', 'w+') as file:
     file.write(str(training_loss_lst))
 with open(r'model_results\16_batch_data\training_accuracy.txt', 'w+') as file:
     file.write(str(training_accuracy_lst))
-with open(r'model_results\16_batch_data\test_loss.txt', 'w+') as file:
-    file.write(str(test_loss_lst))
-with open(r'model_results\16_batch_data\test_accuracy.txt', 'w+') as file:
-    file.write(str(test_acc_lst))
+with open(r'model_results\16_batch_data\val_loss.txt', 'w+') as file:
+    file.write(str(val_loss_lst))
+with open(r'model_results\16_batch_data\val_accuracy.txt', 'w+') as file:
+    file.write(str(val_acc_lst))
 with open(r'model_results\16_batch_data\f1_score.txt', 'w+') as file:
     file.write(str(f1_score_lst))
+with open(rf'model_results\kept_model_stats.txt', 'w+') as file:
+    file.write(str(f'Kept Model, Epoch: {kept_epoch}, Train Loss: {final_train_loss}, Val Loss: {final_val_loss}, Train Accuracy: {final_train_accuracy}, Val Accuracy: {final_val_accuracy}'))
