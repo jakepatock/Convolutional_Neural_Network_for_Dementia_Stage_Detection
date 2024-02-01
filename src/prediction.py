@@ -77,11 +77,12 @@ def dementia_stage_prediction(path):
     #load image that will be classified 
     image = Image.open(path)
 
-    #transforming to tensor, getting mean and std to use to normalize the image 
-    norm_transform = tv.transforms.Compose([tv.transforms.ToTensor(), transforms.Grayscale(num_output_channels=1)])
-    norm_tensor =  norm_transform(image)
-    mean = torch.mean(norm_tensor)
-    std = torch.std(norm_tensor)
+    #getting trianing mean and std to standardize the data 
+    with open(r'model_results\standardize.txt', 'r') as file:
+        content = file.read()
+        lst = ast.literal_eval(content)
+        mean = lst[0]
+        std = lst[1]
 
     #def the preprocessing transfomration for the next step 
     transform = tv.transforms.Compose([tv.transforms.ToTensor(), transforms.Grayscale(num_output_channels=1), transforms.Normalize(mean, std), transforms.Resize((128, 128), antialias=True)]) 

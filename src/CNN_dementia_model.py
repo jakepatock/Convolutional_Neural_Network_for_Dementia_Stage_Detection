@@ -74,6 +74,9 @@ norm_val_sample = torch.utils.data.Subset(norm_dataset, val_idx)
 
 #calcualte the mean and std for of training data in order to standardize the entire dataset 
 mean, std = image_dataset_normalization(norm_train_sample)
+#writing these to a file in order to use them on test data prediction 
+with open('model_results\standardize.txt', 'w+') as file:
+    file.write(str([mean.item(), std.item()]))
 
 #standardizing training and val samples 
 final_transformation = tv.transforms.Compose([tv.transforms.ToTensor(), transforms.Grayscale(num_output_channels=1), transforms.Normalize(mean,std)])
@@ -90,6 +93,7 @@ val_sample = torch.utils.data.Subset(dataset, val_idx)
 batch_size = 16
 
 #feeding the datasets to the loader, the sampler list a pytorch object created from a list of indexes that specific what samples will be loaded into that loader
+#the values are already shuffled from the train_test_plit sklearn funciton therefore no need to do it here 
 train_loader = torch.utils.data.DataLoader(train_sample, batch_size, pin_memory=True)
 val_loader = torch.utils.data.DataLoader(val_sample, batch_size, pin_memory=True)
 
