@@ -62,25 +62,29 @@ def image_dataset_normalization(dataset_tensor):
 
     return mean, std
 
-mean, std = image_dataset_normalization(norm_dataset)
-
-#composing final preprocessing transfomrations and making the proprocessed dataset
-tensor_gray_norm_transformations = tv.transforms.Compose([tv.transforms.ToTensor(), transforms.Grayscale(num_output_channels=1), tv.transforms.Normalize(mean, std)])
-dataset = tv.datasets.ImageFolder(data, transform=tensor_gray_norm_transformations)
-#writting classes to file to use later 
-with open(r'model_results\classes.txt', 'w+') as file:
-    file.write(str(dataset.classes))
-
-
 #division this data to validation and traiing 80, 20 in a stratified manner geting index from train_val_split
-lables = dataset.targets
+lables = norm_dataset.targets
+
 #first arg passes the list of indexes of all lables and elements, stratified are the lables of the indexes passesd to the function to split hte data in a stratified manner 
 train_idx, val_idx = skms.train_test_split(np.arange(len(lables)), test_size=.2, train_size=.8, random_state=random_seed, shuffle=True, stratify=lables)
 
 #now transform these list of indexs into pytorch dataset sampler which will be passed to the dataloader 
+norm_train_sample = torch.utils.data.Subset(norm_dataset, train_idx)
+norm_val_sample = torch.utils.data.Subset(norm_dataset, val_idx)
+
+#calcualte the mean and std for of training data in order to standardize the entire dataset 
+mean, std = image_dataset_normalization(norm_train_sample)
+
+#standardizing training and val samples 
+final_transformation = tv.transforms.Compose([tv.transforms.ToTensor(), transforms.Grayscale(num_output_channels=1), transforms.Normalize(mean,std)])
+
+#loading final dataset to apply the normalization to 
+dataset = tv.datasets.ImageFolder(data, transform=final_transformation)
+
+#now transform these list of indicies into pytorch dataset sampler which will be passed to the dataloader 
 train_sample = torch.utils.data.Subset(dataset, train_idx)
 val_sample = torch.utils.data.Subset(dataset, val_idx)
-
+    
 #batch size of the data used due to the fact that loading all the trianing data into ram at one point will not be possible
 #therefore we split it up into batches of training data 
 batch_size = 16
@@ -88,6 +92,10 @@ batch_size = 16
 #feeding the datasets to the loader, the sampler list a pytorch object created from a list of indexes that specific what samples will be loaded into that loader
 train_loader = torch.utils.data.DataLoader(train_sample, batch_size, pin_memory=True)
 val_loader = torch.utils.data.DataLoader(val_sample, batch_size, pin_memory=True)
+
+#writting classes to file to use later 
+with open(r'model_results\classes.txt', 'w+') as file:
+    file.write(str(dataset.classes))
 
 #init the early stopping class that will be used to stop training after a specified number of epcohs
 #without inprovment to the f1 score
